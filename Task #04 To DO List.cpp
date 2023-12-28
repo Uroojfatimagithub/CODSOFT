@@ -23,22 +23,22 @@ void displayTasks(const std::vector<Task>& tasks) {
 }
 
 void addTask(std::vector<Task>& tasks, const std::string& description) {
-    tasks.emplace_back(description);
+    tasks.push_back(Task(description)); // Use push_back instead of emplace_back
     std::cout << "Task added successfully.\n";
 }
 
-void markTaskAsCompleted(std::vector<Task>& tasks, size_t index) {
-    if (index >= 0 && index < tasks.size()) {
-        tasks[index].completed = true;
+void markTaskAsCompleted(std::vector<Task>& tasks, int index) {
+    if (index >= 0 && static_cast<size_t>(index) < tasks.size()) {
+        tasks[static_cast<size_t>(index)].completed = true;
         std::cout << "Task marked as completed.\n";
     } else {
         std::cout << "Invalid task index.\n";
     }
 }
 
-void removeTask(std::vector<Task>& tasks, size_t index) {
-    if (index >= 0 && index < tasks.size()) {
-        tasks.erase(tasks.begin() + index);
+void removeTask(std::vector<Task>& tasks, int index) {
+    if (index >= 0 && static_cast<size_t>(index) < tasks.size()) {
+        tasks.erase(tasks.begin() + static_cast<size_t>(index));
         std::cout << "Task removed successfully.\n";
     } else {
         std::cout << "Invalid task index.\n";
@@ -73,14 +73,14 @@ int main() {
                 displayTasks(tasks);
                 break;
             case 3: {
-                size_t index;
+                int index;
                 std::cout << "Enter the task index to mark as completed: ";
                 std::cin >> index;
                 markTaskAsCompleted(tasks, index - 1);
                 break;
             }
             case 4: {
-                size_t index;
+                int index;
                 std::cout << "Enter the task index to remove: ";
                 std::cin >> index;
                 removeTask(tasks, index - 1);
